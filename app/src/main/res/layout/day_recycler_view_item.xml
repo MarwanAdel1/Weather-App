@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="70dp"
+    android:layout_margin="10dp"
+    android:background="@android:color/transparent"
+    android:elevation="10dp"
+    android:padding="16dp"
+    app:cardCornerRadius="10dp">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:weightSum="5">
+
+        <TextView
+            android:id="@+id/day_textView"
+            android:layout_width="0dp"
+            android:paddingStart="16dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.5"
+            android:text="Sunday" />
+
+        <ImageView
+            android:id="@+id/weather_condition_image"
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:layout_gravity="center"
+            android:layout_weight="0.5"
+            android:scaleType="centerInside"
+            android:src="@drawable/moon" />
+
+        <TextView
+            android:id="@+id/weather_desc_textView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.5"
+            android:text="Clear Sky" />
+
+
+        <TextView
+            android:id="@+id/temp_textView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.75"
+            android:text="12/13" />
+
+        <TextView
+            android:id="@+id/temp_unit_textView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.75"
+            android:text="°C" />
+
+
+    </LinearLayout>
+
+
+</androidx.cardview.widget.CardView>
