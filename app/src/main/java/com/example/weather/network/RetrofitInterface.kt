@@ -8,11 +8,12 @@ import retrofit2.http.Query
 interface RetrofitInterface {
     @GET("onecall")
     suspend fun getWeatherDataDefault(
-        @Query("lat") lat: String = "31.25654",
-        @Query("lon") lon: String = "32.28411",
-        @Query("APPID") app_id: String = "995c45a53e7ffec8023b53d0ec0cf352"
-    ): Response<WeatherResponse>
-
+        @Query("lat") lat: String,
+        @Query("lon") lon: String,
+        @Query("units") units: String,
+        @Query("APPID") app_id: String
+    ): WeatherResponse
+/*
     @GET("onecall")
     suspend fun getWeatherDataArabic(
         @Query("lat") lat: String = "31.25654",
@@ -39,5 +40,5 @@ interface RetrofitInterface {
         // @Query("exclude") exclude: String="current",
         @Query("APPID") app_id: String = API_KEY,
     ): Response<FavouriteData>
-*/
+*/*/
 }

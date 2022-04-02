@@ -3,11 +3,18 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/ITI/Android/Architecture-kotlin/Weather/app/src/main/res/drawable/cloud.xml" value="0.1015" />
+        <entry key="..\:/ITI/Android/Architecture-kotlin/Weather/app/src/main/res/drawable/humidity.xml" value="0.1015" />
         <entry key="..\:/ITI/Android/Architecture-kotlin/Weather/app/src/main/res/drawable/menu_icon.xml" value="0.1" />
+        <entry key="..\:/ITI/Android/Architecture-kotlin/Weather/app/src/main/res/drawable/pressure.xml" value="0.1015" />
         <entry key="..\:/ITI/Android/Architecture-kotlin/Weather/app/src/main/res/drawable/rounded_corners.xml" value="0.1" />
+        <entry key="..\:/ITI/Android/Architecture-kotlin/Weather/app/src/main/res/drawable/uv_rays.xml" value="0.1" />
+        <entry key="..\:/ITI/Android/Architecture-kotlin/Weather/app/src/main/res/drawable/visibility.xml" value="0.1015" />
+        <entry key="..\:/ITI/Android/Architecture-kotlin/Weather/app/src/main/res/drawable/wind.xml" value="0.1015" />
         <entry key="..\:/ITI/Android/Architecture-kotlin/Weather/app/src/main/res/layout/activity_home.xml" value="0.1" />
         <entry key="..\:/ITI/Android/Architecture-kotlin/Weather/app/src/main/res/layout/activity_main.xml" value="0.1" />
         <entry key="..\:/ITI/Android/Architecture-kotlin/Weather/app/src/main/res/layout/day_recycler_view_item.xml" value="0.20353982300884957" />
+        <entry key="..\:/ITI/Android/Architecture-kotlin/Weather/app/src/main/res/layout/test.xml" value="0.25" />
         <entry key="..\:/ITI/Android/Architecture-kotlin/Weather/app/src/main/res/layout/time_recycler_view_item.xml" value="0.1" />
       </map>
     </option>

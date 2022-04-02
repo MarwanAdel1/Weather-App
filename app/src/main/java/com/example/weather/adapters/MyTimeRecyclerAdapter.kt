@@ -1,5 +1,6 @@
 package com.example.weather.adapters
 
+import android.content.Context
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -7,39 +8,17 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import com.example.weather.R
-import com.example.weather.pojo.TimeWeatherRecycler
+import com.example.weather.pojo.Hourly
+import java.text.SimpleDateFormat
 
-class MyTimeRecyclerAdapter() : RecyclerView.Adapter<MyTimeRecyclerAdapter.ViewHolder>() {
-    var list: MutableList<TimeWeatherRecycler> = mutableListOf()
+class MyTimeRecyclerAdapter(private var context: Context) : RecyclerView.Adapter<MyTimeRecyclerAdapter.ViewHolder>() {
+    private var hourlyWeatherList: List<Hourly> = ArrayList()
 
-    init {
-        var timeWeather = TimeWeatherRecycler("1 AM",0,"15","°C")
-        list.add(timeWeather)
-        timeWeather = TimeWeatherRecycler("2 AM",0,"15","°C")
-        list.add(timeWeather)
-        timeWeather = TimeWeatherRecycler("3 AM",0,"15","°C")
-        list.add(timeWeather)
-        timeWeather = TimeWeatherRecycler("4 AM",0,"15","°C")
-        list.add(timeWeather)
-        timeWeather = TimeWeatherRecycler("5 AM",0,"15","°C")
-        list.add(timeWeather)
-        timeWeather = TimeWeatherRecycler("6 AM",0,"15","°C")
-        list.add(timeWeather)
-        timeWeather = TimeWeatherRecycler("7 AM",0,"15","°C")
-        list.add(timeWeather)
-        timeWeather = TimeWeatherRecycler("8 AM",0,"15","°C")
-        list.add(timeWeather)
-        timeWeather = TimeWeatherRecycler("9 AM",0,"15","°C")
-        list.add(timeWeather)
-        timeWeather = TimeWeatherRecycler("10 AM",0,"15","°C")
-        list.add(timeWeather)
-        timeWeather = TimeWeatherRecycler("11 AM",0,"15","°C")
-        list.add(timeWeather)
-        timeWeather = TimeWeatherRecycler("12 AM",0,"15","°C")
-        list.add(timeWeather)
-        timeWeather = TimeWeatherRecycler("1 PM",0,"15","°C")
-        list.add(timeWeather)
+    fun setHourlyWeatherList(hourlyWeatherList: List<Hourly>) {
+        this.hourlyWeatherList = hourlyWeatherList
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -49,14 +28,23 @@ class MyTimeRecyclerAdapter() : RecyclerView.Adapter<MyTimeRecyclerAdapter.ViewH
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.timeTextView.text=list[position].time
-        holder.tempTextView.text=list[position].temp
-        holder.tempUnitTextView.text=list[position].tempUnit
+        holder.timeTextView.text= SimpleDateFormat("h aa").format(hourlyWeatherList[position].dt*1000)
+        holder.tempTextView.text=hourlyWeatherList[position].temp.toInt().toString()
+        holder.tempUnitTextView.text="°C"
+
+        val iconUrl =
+            "https://openweathermap.org/img/wn/${hourlyWeatherList[position].weather[0].icon}@2x.png"
+        Log.i("TAG", "setWeather: iconUrl   $iconUrl")
+        Glide.with(context).load(iconUrl)
+            .apply(
+                RequestOptions().override(20, 20)
+            )
+            .into(holder.weatherImage)
     }
 
     override fun getItemCount(): Int {
-        Log.e("TAG","List Size : ${list.size}")
-        return list.size
+        Log.e("TAG","List Size : ${hourlyWeatherList.size}")
+        return hourlyWeatherList.size
     }
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

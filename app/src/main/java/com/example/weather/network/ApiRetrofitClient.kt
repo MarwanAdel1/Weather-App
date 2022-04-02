@@ -3,7 +3,7 @@ package com.example.weather.network
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-class RetrofitClient {
+class ApiRetrofitClient {
     companion object {
         private val API_URL = "https://api.openweathermap.org/data/2.5/"
         private var retrofit: Retrofit? = null
