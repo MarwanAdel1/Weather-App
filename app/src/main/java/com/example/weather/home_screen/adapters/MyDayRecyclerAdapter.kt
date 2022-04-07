@@ -1,4 +1,4 @@
-package com.example.weather.adapters
+package com.example.weather.home_screen.adapters
 
 import android.content.Context
 import android.text.format.DateUtils
@@ -13,16 +13,22 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.example.weather.R
 import com.example.weather.pojo.Daily
+import com.example.weather.pojo.SettingData
 import java.text.SimpleDateFormat
 import java.util.*
 
 class MyDayRecyclerAdapter(private var context: Context) :
     RecyclerView.Adapter<MyDayRecyclerAdapter.ViewHolder>() {
     private var dailyWeatherList: List<Daily> = ArrayList()
+    private var settingData: SettingData? = null;
 
 
     fun setDailyWeatherList(dailyWeatherList: List<Daily>): Unit {
         this.dailyWeatherList = dailyWeatherList
+    }
+
+    fun setSetting(setting: SettingData) {
+        settingData = setting
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -36,18 +42,49 @@ class MyDayRecyclerAdapter(private var context: Context) :
         var date = Date(dailyWeatherList[position].dt * 1000)
         var str: String
         if (DateUtils.isToday(date.time)) {
-            str = "Today"
+            str = context.getString(R.string.today)
         } else if (DateUtils.isToday(date.time - DateUtils.DAY_IN_MILLIS)) {
-            str = "Tomorrow"
+            str = context.getString(R.string.tomorrow)
         } else {
-            str = SimpleDateFormat("EEEE").format(dailyWeatherList[position].dt * 1000)
+            var lang = when (settingData!!.language) {
+                0 -> "en"
+                1 -> "ar"
+                else -> "en"
+            }
+            var locale = Locale(lang)
+            str = SimpleDateFormat("EEEE", locale).format(dailyWeatherList[position].dt * 1000)
         }
         holder.dayTextView.text = str
         //SimpleDateFormat("EEEE").format(dailyWeatherList[position].dt * 1000)
         holder.weatherDescriptionTextView.text = dailyWeatherList[position].weather[0].description
-        holder.tempTextView.text =
-            "${dailyWeatherList[position].temp.min.toInt()}/${dailyWeatherList[position].temp.max.toInt()}"
-        holder.tempUnitTextView.text = "°C"
+        holder.tempTextView.text = when (settingData!!.tempValue) {
+            0 -> String.format(
+                "%d",
+                dailyWeatherList[position].temp.min.toInt()
+            ) + "/" + String.format("%d", dailyWeatherList[position].temp.max.toInt())
+            1 -> String.format(
+                "%d",
+                (dailyWeatherList[position].temp.min + 273.15).toInt()
+            ) + "/" + String.format("%d", (dailyWeatherList[position].temp.max + 273.15).toInt())
+            2 -> String.format(
+                "%d",
+                ((dailyWeatherList[position].temp.min * 1.8) + 32).toInt()
+            ) + "/" + String.format(
+                "%d",
+                ((dailyWeatherList[position].temp.max * 1.8) + 32).toInt()
+            )
+            else -> String.format(
+                "%d",
+                dailyWeatherList[position].temp.min.toInt()
+            ) + "/" + String.format("%d", dailyWeatherList[position].temp.max.toInt())
+        }
+
+        holder.tempUnitTextView.text = when (settingData!!.tempValue) {
+            0 -> context.getString(R.string.celsius)
+            1 -> context.getString(R.string.kelvin)
+            2 -> context.getString(R.string.fahrenheit)
+            else -> context.getString(R.string.celsius)
+        }
 
         val iconUrl =
             "https://openweathermap.org/img/wn/${dailyWeatherList[position].weather[0].icon}@2x.png"

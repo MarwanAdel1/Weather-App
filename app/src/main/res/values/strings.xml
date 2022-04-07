@@ -1,4 +1,23 @@
 <resources>
     <string name="app_name">Weather</string>
     <string name="home_textview">Home</string>
+    <string name="setting_text">Setting</string>
+    <string name="favourite">Favourite</string>
+    <string name="title_activity_maps">Maps</string>
+    <string name="today">Today</string>
+    <string name="tomorrow">Tomorrow</string>
+    <string name="visibility">Visibility</string>
+    <string name="m">" "m</string>
+    <string name="ultra_violet">Ultra Violet</string>
+    <string name="cloud">Cloud</string>
+    <string name="percent">" "%</string>
+    <string name="wind">Wind</string>
+    <string name="humadity">Humadity</string>
+    <string name="pressure">Pressure</string>
+    <string name="hpa">" "hPa</string>
+    <string name="celsius">" "°C</string>
+    <string name="kelvin">" "K</string>
+    <string name="fahrenheit"> F</string>
+    <string name="mpers">" "m/s</string>
+    <string name="mph">" "mph</string>
 </resources>

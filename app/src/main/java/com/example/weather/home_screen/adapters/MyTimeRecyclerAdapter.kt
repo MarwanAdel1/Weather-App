@@ -1,4 +1,4 @@
-package com.example.weather.adapters
+package com.example.weather.home_screen.adapters
 
 import android.content.Context
 import android.util.Log
@@ -12,13 +12,20 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.example.weather.R
 import com.example.weather.pojo.Hourly
+import com.example.weather.pojo.SettingData
 import java.text.SimpleDateFormat
 
-class MyTimeRecyclerAdapter(private var context: Context) : RecyclerView.Adapter<MyTimeRecyclerAdapter.ViewHolder>() {
+class MyTimeRecyclerAdapter(private var context: Context) :
+    RecyclerView.Adapter<MyTimeRecyclerAdapter.ViewHolder>() {
     private var hourlyWeatherList: List<Hourly> = ArrayList()
+    private var settingData: SettingData? = null;
 
     fun setHourlyWeatherList(hourlyWeatherList: List<Hourly>) {
         this.hourlyWeatherList = hourlyWeatherList
+    }
+
+    fun setSetting(setting:SettingData) {
+        settingData=setting
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -28,9 +35,21 @@ class MyTimeRecyclerAdapter(private var context: Context) : RecyclerView.Adapter
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.timeTextView.text= SimpleDateFormat("h aa").format(hourlyWeatherList[position].dt*1000)
-        holder.tempTextView.text=hourlyWeatherList[position].temp.toInt().toString()
-        holder.tempUnitTextView.text="°C"
+        holder.timeTextView.text =
+            SimpleDateFormat("h aa").format(hourlyWeatherList[position].dt * 1000)
+        holder.tempTextView.text = when (settingData!!.tempValue) {
+            0 -> String.format("%d",hourlyWeatherList[position].temp.toInt())
+            1 -> String.format("%d",(hourlyWeatherList[position].temp + 273.15).toInt())
+            2 -> String.format("%d",((hourlyWeatherList[position].temp * 1.8) + 32).toInt())
+            else -> String.format("%d",hourlyWeatherList[position].temp.toInt())
+        }
+
+        holder.tempUnitTextView.text = when (settingData!!.tempValue) {
+            0 -> context.getString(R.string.celsius)
+            1 -> context.getString(R.string.kelvin)
+            2 -> context.getString(R.string.fahrenheit)
+            else -> context.getString(R.string.celsius)
+        }
 
         val iconUrl =
             "https://openweathermap.org/img/wn/${hourlyWeatherList[position].weather[0].icon}@2x.png"
@@ -43,7 +62,7 @@ class MyTimeRecyclerAdapter(private var context: Context) : RecyclerView.Adapter
     }
 
     override fun getItemCount(): Int {
-        Log.e("TAG","List Size : ${hourlyWeatherList.size}")
+        Log.e("TAG", "List Size : ${hourlyWeatherList.size}")
         return hourlyWeatherList.size
     }
 

@@ -1,12 +1,26 @@
 package com.example.weather.model
 
-import androidx.lifecycle.LiveData
 import com.example.weather.pojo.CityWeatherTable
 import com.example.weather.pojo.FavouriteCityTable
+import com.example.weather.pojo.ReverseGeocodingResponse
 import com.example.weather.pojo.WeatherResponse
 
 interface WeatherRepoInterface {
-    suspend fun getWeatherDataFromApi(lat: String, lon: String, unit: String, key: String): WeatherResponse
+    suspend fun getWeatherDataFromApi(
+        lat: String,
+        lon: String,
+        unit: String,
+        lang: String,
+        key: String
+    ): WeatherResponse
+
+
+    suspend fun getReverseGeocodingFromApi(
+        location: String,
+        lang: String,
+        key: String
+    ):ReverseGeocodingResponse
+
 
 
     //room-stored movies

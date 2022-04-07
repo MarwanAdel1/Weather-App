@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">الطقس</string>
+    <string name="home_textview">الرئيسية</string>
+    <string name="setting_text">الإعدادات</string>
+    <string name="favourite">المفضل</string>
+    <string name="title_activity_maps">الخريطة</string>
+    <string name="today">اليوم</string>
+    <string name="tomorrow">غداً</string>
+    <string name="visibility">الرؤية</string>
+    <string name="m">" "م</string>
+    <string name="ultra_violet">الاشعة فوق البنفسجية</string>
+    <string name="cloud">السحب</string>
+    <string name="percent">" "%</string>
+    <string name="wind">الرياح</string>
+    <string name="humadity">الرطوبة</string>
+    <string name="pressure">الضغط</string>
+    <string name="hpa">" "هكتوبسكال</string>
+    <string name="celsius">" "د. مئوية</string>
+    <string name="kelvin">" "كلفن</string>
+    <string name="fahrenheit">" "فهرنهايت</string>
+    <string name="mpers">" "م/س"</string>
+    <string name="mph">" "ميل/س</string>
+</resources>

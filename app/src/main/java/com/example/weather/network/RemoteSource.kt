@@ -1,10 +1,12 @@
 package com.example.weather.network
 
 import android.util.Log
+import com.example.weather.pojo.ReverseGeocodingResponse
 import com.example.weather.pojo.WeatherResponse
 
 class RemoteSource() : RemoteSourceInterface {
-    private lateinit var retrofit: RetrofitInterface
+    private lateinit var weatherApiRetrofit: WeatherApiRetrofitInterface
+    private lateinit var reverseGeocodingApiRetrofit: HereReverseGeocodingApiRetrofitInterface
 
     companion object {
         private var instance: RemoteSource? = null
@@ -17,15 +19,18 @@ class RemoteSource() : RemoteSourceInterface {
         lat: String,
         lon: String,
         unit: String,
+        lang: String,
         key: String
     ): WeatherResponse {
-        retrofit = ApiRetrofitClient.getInstance().create(RetrofitInterface::class.java)
-        var response: WeatherResponse?=null
+        weatherApiRetrofit =
+            WeatherApiRetrofitClient.getInstance().create(WeatherApiRetrofitInterface::class.java)
+        var response: WeatherResponse? = null
         try {
-            response = retrofit.getWeatherDataDefault(
+            response = weatherApiRetrofit.getWeatherDataDefault(
                 lat,
                 lon,
                 unit,
+                lang,
                 key
             )
         } catch (e: Exception) {
@@ -33,12 +38,18 @@ class RemoteSource() : RemoteSourceInterface {
         }
         return response!!
 
-//        if (response.code()<=399){
-//            return response.body()!!
-//        }else{
-//            return response.
-//        }
+    }
 
+    override suspend fun getReverseGeocodingOverNetwork(
+        location: String,
+        lang: String,
+        key: String
+    ): ReverseGeocodingResponse {
+        reverseGeocodingApiRetrofit = HereReverseGeocodingApiRetrofitClient.getInstance()
+            .create(HereReverseGeocodingApiRetrofitInterface::class.java)
 
+        var response = reverseGeocodingApiRetrofit.getAddressFromHereApi(location, lang, key)
+
+        return response
     }
 }

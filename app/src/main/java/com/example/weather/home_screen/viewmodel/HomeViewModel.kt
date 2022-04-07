@@ -2,26 +2,24 @@ package com.example.weather.home_screen.viewmodel
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.location.Address
-import android.location.Geocoder
+import android.content.SharedPreferences
 import android.location.Location
 import android.os.Looper
+import android.text.TextUtils.concat
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.weather.data.ApiData
+import com.example.weather.data.ApiKeys
 import com.example.weather.model.WeatherRepoInterface
-import com.example.weather.pojo.CityWeatherTable
-import com.example.weather.pojo.FavouriteCityTable
-import com.example.weather.pojo.WeatherResponse
+import com.example.weather.pojo.*
+import com.example.weather.setting_screen.viewmodel.SettingViewModel
 import com.google.android.gms.location.*
 import com.google.android.gms.tasks.Task
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import java.util.*
 
 class HomeViewModel(
     iRepo: WeatherRepoInterface,
@@ -40,8 +38,18 @@ class HomeViewModel(
     var cityNameLiveData: LiveData<String> = cityNameMutableLiveData
     var favCitiesLiveData: LiveData<List<FavouriteCityTable>> = favCitiesMutableLiveData
 
+    private val settingMutableLiveData = MutableLiveData<SettingData>()
+    var settingLiveData: LiveData<SettingData> = settingMutableLiveData
+
+    private lateinit var sharedPreferences: SharedPreferences
+    private lateinit var sharedPreferencesEditor: SharedPreferences.Editor
+
+    private lateinit var lang: String
+
     init {
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(context)
+        sharedPreferences =
+            context.getSharedPreferences(SettingViewModel.SHARED_PREF_NAME, Context.MODE_PRIVATE)
     }
 
     fun insertWeatherDataToDatabase(cityName: String, cityData: WeatherResponse) {
@@ -50,6 +58,7 @@ class HomeViewModel(
             cityData.current.dt,
             cityData
         )
+        saveCityName(cityName)
         viewModelScope.launch(Dispatchers.IO) {
             weatherRepo.insertCityDataToDatabase(cityWeatherTable)
         }
@@ -89,9 +98,9 @@ class HomeViewModel(
         }
     }
 
-    fun getWeatherDataFromDatabase(city: String) {
+    fun getWeatherDataFromDatabase() {
         viewModelScope.launch {
-            var data = weatherRepo.getCityDataFromDatabase(city)
+            var data = weatherRepo.getCityDataFromDatabase(getCityName())
             withContext(Dispatchers.Main) {
                 if (data != null) {
                     cityNameMutableLiveData.postValue(data.cityName)
@@ -103,10 +112,10 @@ class HomeViewModel(
         }
     }
 
-    fun getWeatherDataFromApi(lat: String, lon: String, unit: String, key: String) {
+    fun getWeatherDataFromApi(lat: String, lon: String, unit: String, lang: String, key: String) {
         viewModelScope.launch(Dispatchers.IO) {
             var weatherResponse: WeatherResponse =
-                weatherRepo.getWeatherDataFromApi(lat, lon, unit, key)
+                weatherRepo.getWeatherDataFromApi(lat, lon, unit, lang, key)
 
             withContext(Dispatchers.Main) {
                 weatherResponseMutableLiveData.postValue(weatherResponse)
@@ -114,8 +123,18 @@ class HomeViewModel(
         }
     }
 
-    fun reverseGeocoding() {
-        val mGeocoder = Geocoder(context.applicationContext, Locale.getDefault())
+    fun reverseGeocoding(lat: String, lon: String, lang: String, key: String) {
+        var at: String = concat(lat,",",lon) as String
+        viewModelScope.launch(Dispatchers.IO) {
+            var address: ReverseGeocodingResponse =
+                weatherRepo.getReverseGeocodingFromApi(at, lang, key)
+            withContext(Dispatchers.Main) {
+                cityNameMutableLiveData.postValue(address.items[0].address.city)
+            }
+        }
+
+
+        /*val mGeocoder = Geocoder(context.applicationContext, Locale.getDefault())
         var addressString = ""
         if (location != null) {
             val addressList: List<Address> =
@@ -131,17 +150,17 @@ class HomeViewModel(
                 addressString = address.adminArea
             }
         }
-        cityNameMutableLiveData.postValue(addressString)
+        cityNameMutableLiveData.postValue(addressString)*/
     }
 
 
     @SuppressLint("MissingPermission")
     fun getLocation() {
         Log.e("TAG", "Test Location 1:")
-        val task: Task<Location> = fusedLocationClient.lastLocation
+        var task: Task<Location> = fusedLocationClient.lastLocation
         Log.e("TAG", "Test Location 2:")
         task.addOnSuccessListener {
-            Log.e("TAG", "Test Location 3:$it")
+            Log.e("TAG", "Test Location 3: $it")
             if (it != null) {
                 Log.e("TAG", "Test Location : ${it.latitude} - ${it.longitude}")
                 location = it
@@ -150,13 +169,22 @@ class HomeViewModel(
                     location!!.latitude.toString(),
                     location!!.longitude.toString(),
                     "metric",
-                    ApiData.API_KEY
+                    lang,
+                    ApiKeys.WEATHER_API_KEY
                 )
 
-                reverseGeocoding()
+                reverseGeocoding(
+                    location!!.latitude.toString(),
+                    location!!.longitude.toString(),
+                    lang,
+                    ApiKeys.HERE_API_KEY
+                )
             } else {
                 getNewLocation()
             }
+        }
+        task.addOnFailureListener {
+            task = fusedLocationClient.lastLocation
         }
     }
 
@@ -187,10 +215,68 @@ class HomeViewModel(
                 lastLocation.latitude.toString(),
                 lastLocation.longitude.toString(),
                 "metric",
-                ApiData.API_KEY
+                lang,
+                ApiKeys.WEATHER_API_KEY
             )
 
-            reverseGeocoding()
+            reverseGeocoding(
+                lastLocation.latitude.toString(),
+                lastLocation.longitude.toString(),
+                lang,
+                ApiKeys.HERE_API_KEY
+            )
+        }
+    }
+
+    fun saveCityName(city: String) {
+        sharedPreferencesEditor = sharedPreferences.edit()
+
+        sharedPreferencesEditor.putString(CITY_NAME, city)
+
+        sharedPreferencesEditor.apply()
+        sharedPreferencesEditor.commit()
+    }
+
+    fun getCityName(): String {
+        var city = sharedPreferences.getString(CITY_NAME, "Unknown")
+        return city.toString()
+    }
+
+    companion object {
+        val CITY_NAME = "city"
+    }
+
+    fun saveSetting() {
+        sharedPreferencesEditor = sharedPreferences.edit()
+
+        sharedPreferencesEditor.putInt(SettingViewModel.TEMP_NAME, 0)
+        sharedPreferencesEditor.putInt(SettingViewModel.WIND_SPEED_NAME, 0)
+        sharedPreferencesEditor.putInt(SettingViewModel.LOCATION_NAME, 0)
+        sharedPreferencesEditor.putInt(SettingViewModel.LANGUAGE_NAME, 0)
+        sharedPreferencesEditor.putInt(SettingViewModel.NOTIFICATION_NAME, 1)
+
+        sharedPreferencesEditor.apply()
+        sharedPreferencesEditor.commit()
+    }
+
+    fun getSetting() {
+        if (!sharedPreferences.contains(SettingViewModel.TEMP_NAME)) {
+            saveSetting()
+        }
+
+        var temp = sharedPreferences.getInt(SettingViewModel.TEMP_NAME, 0)
+        var wind = sharedPreferences.getInt(SettingViewModel.WIND_SPEED_NAME, 0)
+        var location = sharedPreferences.getInt(SettingViewModel.LOCATION_NAME, 0)
+        var language = sharedPreferences.getInt(SettingViewModel.LANGUAGE_NAME, 0)
+        var notification = sharedPreferences.getInt(SettingViewModel.NOTIFICATION_NAME, 1)
+
+        var setting: SettingData = SettingData(temp, wind, location, notification, language)
+        settingMutableLiveData.postValue(setting)
+
+        lang = when (language) {
+            0 -> "en"
+            1 -> "ar"
+            else -> "en"
         }
     }
 

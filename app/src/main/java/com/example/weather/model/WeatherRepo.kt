@@ -1,10 +1,12 @@
 package com.example.weather.model
 
 import android.content.Context
+import android.util.Log
 import com.example.weather.data.room_database.LocalSourceInterface
 import com.example.weather.network.RemoteSourceInterface
 import com.example.weather.pojo.CityWeatherTable
 import com.example.weather.pojo.FavouriteCityTable
+import com.example.weather.pojo.ReverseGeocodingResponse
 import com.example.weather.pojo.WeatherResponse
 
 class WeatherRepo private constructor(
@@ -33,11 +35,19 @@ class WeatherRepo private constructor(
         lat: String,
         lon: String,
         unit: String,
+        lang: String,
         key: String
     ): WeatherResponse {
-        return remoteSourceInterface.getWeatherDataOverNetwork(lat, lon, unit, key)
+        return remoteSourceInterface.getWeatherDataOverNetwork(lat, lon, unit, lang, key)
     }
 
+    override suspend fun getReverseGeocodingFromApi(
+        location: String,
+        lang: String,
+        key: String
+    ): ReverseGeocodingResponse {
+        return remoteSourceInterface.getReverseGeocodingOverNetwork(location, lang, key)
+    }
 
     override fun insertCityDataToDatabase(city: CityWeatherTable) {
         localSourceInterface.insertCityData(city)
