@@ -5,7 +5,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 class WeatherApiRetrofitClient {
     companion object {
-        private val API_URL = "https://api.openweathermap.org/data/2.5/"
+        private const val API_URL = "https://api.openweathermap.org/data/2.5/"
         private var retrofit: Retrofit? = null
 
         fun getInstance(): Retrofit {

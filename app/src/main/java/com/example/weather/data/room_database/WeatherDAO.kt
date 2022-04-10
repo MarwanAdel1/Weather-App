@@ -1,8 +1,7 @@
 package com.example.weather.data.room_database
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.room.*
+import com.example.weather.pojo.AlertTable
 import com.example.weather.pojo.CityWeatherTable
 import com.example.weather.pojo.FavouriteCityTable
 
@@ -26,4 +25,13 @@ interface WeatherDAO {
     @Delete
     fun deleteFavouriteCity(city: FavouriteCityTable)
 
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertAlert(alert: AlertTable)
+
+    @Query("SELECT * FROM alert")
+    suspend fun getAlert(): List<AlertTable>
+
+    @Delete
+    fun deleteAlert(alert: AlertTable)
 }

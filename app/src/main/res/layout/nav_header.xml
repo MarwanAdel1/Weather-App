@@ -6,27 +6,31 @@
     android:theme="@style/ThemeOverlay.AppCompat.Dark">
 
     <LinearLayout
-        android:layout_margin="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="10dp"
         android:orientation="horizontal">
 
-        <ImageView
+
+        <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/profile_image"
             android:layout_width="70dp"
             android:layout_height="70dp"
-            android:scaleType="fitCenter"
-            android:src="@drawable/uv" />
+            android:scaleType="centerCrop"
+            android:src="@drawable/app_icon"
+            app:civ_border_color="#FF000000"
+            app:civ_border_width="2dp" />
 
 
         <TextView
-            android:textSize="20sp"
-            android:gravity="center"
             android:id="@+id/txtHeader"
             android:layout_width="wrap_content"
             android:layout_height="70dp"
             android:layout_marginStart="20dp"
-            android:text="Weather"
-            android:textColor="@color/black" />
+            android:gravity="center"
+            android:text="@string/app_name"
+            android:textColor="@color/black"
+            android:textSize="20sp" />
     </LinearLayout>
 
     <View

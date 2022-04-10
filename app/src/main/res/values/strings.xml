@@ -20,4 +20,21 @@
     <string name="fahrenheit"> F</string>
     <string name="mpers">" "m/s</string>
     <string name="mph">" "mph</string>
+    <string name="last_update">Last update:" "</string>
+    <string name="set_location">Set Location</string>
+    <string name="add_to_favourite">Add to favourite</string>
+    <string name="temperature">Temperature</string>
+    <string name="celsius_written">Celsius</string>
+    <string name="kelvin_written">Kelvin</string>
+    <string name="fahrenheit_written">Fahrenheit</string>
+    <string name="wind_speed">Wind Speed</string>
+    <string name="notification">Notification</string>
+    <string name="enable">Enable</string>
+    <string name="disable">Disable</string>
+    <string name="language">Language</string>
+    <string name="english">English</string>
+    <string name="arabic">Arabic</string>
+    <string name="alert">Alert</string>
+    <string name="unknown_place">Unknown Place</string>
+    <string name="set">Set</string>
 </resources>

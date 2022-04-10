@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/gradient_background_color"
-    tools:context=".MainActivity">
+    tools:context=".main_activity.view.MainActivity">
 
     <ProgressBar
         android:id="@+id/progress_indicator"
@@ -49,6 +49,36 @@
                 android:paddingBottom="1dp">
 
                 <TextView
+                    android:textSize="10sp"
+                    android:id="@+id/last_update_key_tx"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/last_update"
+                    android:textColor="@color/white"
+                    app:layout_constraintEnd_toStartOf="@id/last_update_value_tx"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:layout_marginEnd="10dp"
+                    android:textSize="10sp"
+                    android:id="@+id/last_update_value_tx"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/white"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageView
+                    android:id="@+id/location_icon"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginEnd="20dp"
+                    android:src="@drawable/location_icon"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/last_update_value_tx" />
+
+                <TextView
                     android:id="@+id/city_textView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -70,13 +100,13 @@
                     app:layout_constraintTop_toBottomOf="@id/city_textView" />
 
                 <androidx.cardview.widget.CardView
-                    android:outlineSpotShadowColor="@android:color/transparent"
-                    android:outlineAmbientShadowColor="@android:color/transparent"
                     android:id="@+id/card_view"
                     android:layout_width="match_parent"
                     android:layout_height="300dp"
                     android:layout_margin="20dp"
                     android:backgroundTint="@android:color/transparent"
+                    android:outlineAmbientShadowColor="@android:color/transparent"
+                    android:outlineSpotShadowColor="@android:color/transparent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/date_textView">

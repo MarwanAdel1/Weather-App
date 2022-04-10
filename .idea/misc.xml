@@ -24,6 +24,34 @@
         <entry key="..\:/ITI/Android/Architecture-kotlin/Weather/app/src/main/res/layout/test.xml" value="0.25" />
         <entry key="..\:/ITI/Android/Architecture-kotlin/Weather/app/src/main/res/layout/time_recycler_view_item.xml" value="0.1" />
         <entry key="..\:/ITI/Android/Architecture-kotlin/Weather/app/src/main/res/menu/menu_items.xml" value="0.20416666666666666" />
+        <entry key="..\:/Projects/Weather-App/app/src/main/res/drawable/alert_icon.xml" value="0.1" />
+        <entry key="..\:/Projects/Weather-App/app/src/main/res/drawable/delete_fav_icon.xml" value="0.1" />
+        <entry key="..\:/Projects/Weather-App/app/src/main/res/drawable/done_icon.xml" value="0.1" />
+        <entry key="..\:/Projects/Weather-App/app/src/main/res/drawable/favorite_icon.xml" value="0.1" />
+        <entry key="..\:/Projects/Weather-App/app/src/main/res/drawable/gradient_background_color.xml" value="0.1" />
+        <entry key="..\:/Projects/Weather-App/app/src/main/res/drawable/location_icon.xml" value="0.1" />
+        <entry key="..\:/Projects/Weather-App/app/src/main/res/drawable/map_icon.xml" value="0.1" />
+        <entry key="..\:/Projects/Weather-App/app/src/main/res/drawable/no_fav.xml" value="0.1" />
+        <entry key="..\:/Projects/Weather-App/app/src/main/res/drawable/plus_icon.xml" value="0.1" />
+        <entry key="..\:/Projects/Weather-App/app/src/main/res/drawable/rounded_corners.xml" value="0.1" />
+        <entry key="..\:/Projects/Weather-App/app/src/main/res/drawable/setting_icon.xml" value="0.1" />
+        <entry key="..\:/Projects/Weather-App/app/src/main/res/drawable/vertical_menu_icon.xml" value="0.1" />
+        <entry key="..\:/Projects/Weather-App/app/src/main/res/layout/activity_fav_maps.xml" value="0.1381340579710145" />
+        <entry key="..\:/Projects/Weather-App/app/src/main/res/layout/activity_home_maps.xml" value="0.1" />
+        <entry key="..\:/Projects/Weather-App/app/src/main/res/layout/activity_main.xml" value="0.11096014492753623" />
+        <entry key="..\:/Projects/Weather-App/app/src/main/res/layout/activity_maps.xml" value="0.11096014492753623" />
+        <entry key="..\:/Projects/Weather-App/app/src/main/res/layout/add_alert_dialog.xml" value="0.14175724637681159" />
+        <entry key="..\:/Projects/Weather-App/app/src/main/res/layout/alert_list_item.xml" value="0.5148026315789473" />
+        <entry key="..\:/Projects/Weather-App/app/src/main/res/layout/day_recycler_view_item.xml" value="0.14175724637681159" />
+        <entry key="..\:/Projects/Weather-App/app/src/main/res/layout/fav_list_item.xml" value="0.14492753623188406" />
+        <entry key="..\:/Projects/Weather-App/app/src/main/res/layout/fragment_alert.xml" value="0.1" />
+        <entry key="..\:/Projects/Weather-App/app/src/main/res/layout/fragment_favourite.xml" value="0.11096014492753623" />
+        <entry key="..\:/Projects/Weather-App/app/src/main/res/layout/fragment_home.xml" value="0.2" />
+        <entry key="..\:/Projects/Weather-App/app/src/main/res/layout/fragment_setting.xml" value="0.22" />
+        <entry key="..\:/Projects/Weather-App/app/src/main/res/layout/nav_header.xml" value="0.14175724637681159" />
+        <entry key="..\:/Projects/Weather-App/app/src/main/res/layout/time_recycler_view_item.xml" value="0.14175724637681159" />
+        <entry key="..\:/Projects/Weather-App/app/src/main/res/menu/menu_items.xml" value="0.20416666666666666" />
+        <entry key="..\:/Projects/Weather-App/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.1" />
       </map>
     </option>
   </component>

@@ -6,16 +6,16 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 
-class HereReverseGeocodingApiRetrofitClient() {
+class HereReverseGeocodingApiRetrofitClient {
 
     companion object {
-        private val API_URL = "https://revgeocode.search.hereapi.com/v1/"
+        private const val API_URL = "https://revgeocode.search.hereapi.com/v1/"
         private var retrofit: Retrofit? = null
 
         fun getInstance(): Retrofit {
             val interceptor = HttpLoggingInterceptor()
-            interceptor.setLevel(HttpLoggingInterceptor.Level.BODY)
-            var client = OkHttpClient.Builder().addInterceptor(interceptor).build()
+            interceptor.apply { interceptor.level = HttpLoggingInterceptor.Level.BODY }
+            val client = OkHttpClient.Builder().addInterceptor(interceptor).build()
             if (retrofit == null) {
                 retrofit = Retrofit.Builder()
                     .baseUrl(API_URL)

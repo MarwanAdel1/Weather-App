@@ -1,10 +1,11 @@
 package com.example.weather.network
 
 import android.util.Log
+import com.example.weather.pojo.AlertResponse
 import com.example.weather.pojo.ReverseGeocodingResponse
 import com.example.weather.pojo.WeatherResponse
 
-class RemoteSource() : RemoteSourceInterface {
+class RemoteSource : RemoteSourceInterface {
     private lateinit var weatherApiRetrofit: WeatherApiRetrofitInterface
     private lateinit var reverseGeocodingApiRetrofit: HereReverseGeocodingApiRetrofitInterface
 
@@ -21,7 +22,7 @@ class RemoteSource() : RemoteSourceInterface {
         unit: String,
         lang: String,
         key: String
-    ): WeatherResponse {
+    ): WeatherResponse? {
         weatherApiRetrofit =
             WeatherApiRetrofitClient.getInstance().create(WeatherApiRetrofitInterface::class.java)
         var response: WeatherResponse? = null
@@ -36,8 +37,22 @@ class RemoteSource() : RemoteSourceInterface {
         } catch (e: Exception) {
             Log.e("TAG", "getWeatherDataOverNetwork: $e")
         }
-        return response!!
+        return response
 
+    }
+
+
+    override suspend fun getAlertData(
+        lat: String,
+        lon: String,
+        lang: String,
+        app_id: String
+    ): AlertResponse? {
+        weatherApiRetrofit =
+            WeatherApiRetrofitClient.getInstance().create(WeatherApiRetrofitInterface::class.java)
+
+        var response :AlertResponse? = weatherApiRetrofit.getAlertDataDefault(lat, lon, "", lang, app_id)
+        return response
     }
 
     override suspend fun getReverseGeocodingOverNetwork(
@@ -48,8 +63,6 @@ class RemoteSource() : RemoteSourceInterface {
         reverseGeocodingApiRetrofit = HereReverseGeocodingApiRetrofitClient.getInstance()
             .create(HereReverseGeocodingApiRetrofitInterface::class.java)
 
-        var response = reverseGeocodingApiRetrofit.getAddressFromHereApi(location, lang, key)
-
-        return response
+        return reverseGeocodingApiRetrofit.getAddressFromHereApi(location, lang, key)
     }
 }

@@ -21,4 +21,21 @@
     <string name="fahrenheit">" "فهرنهايت</string>
     <string name="mpers">" "م/س"</string>
     <string name="mph">" "ميل/س</string>
+    <string name="last_update">"اخر تحديث: "</string>
+    <string name="set_location">تحديد المكان</string>
+    <string name="add_to_favourite">أضف إلى المفضلة</string>
+    <string name="temperature">الحرارة</string>
+    <string name="celsius_written">د. مئوية</string>
+    <string name="kelvin_written">كلفن</string>
+    <string name="fahrenheit_written">فهرنهايت</string>
+    <string name="wind_speed">سرعة الرياح</string>
+    <string name="notification">الاشعارات</string>
+    <string name="enable">تفعيل</string>
+    <string name="disable">تعطيل</string>
+    <string name="language">اللغة</string>
+    <string name="english">الانجليزية</string>
+    <string name="arabic">العربية</string>
+    <string name="alert">التنبيه</string>
+    <string name="unknown_place">غير معلوم</string>
+    <string name="set">ضبط</string>
 </resources>

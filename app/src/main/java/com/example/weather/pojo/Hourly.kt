@@ -1,7 +1,5 @@
 package com.example.weather.pojo
 
-import com.example.weather.pojo.Weather
-
 data class Hourly(
     var dt: Long,
     var temp: Double,

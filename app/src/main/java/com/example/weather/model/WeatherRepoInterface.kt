@@ -1,9 +1,6 @@
 package com.example.weather.model
 
-import com.example.weather.pojo.CityWeatherTable
-import com.example.weather.pojo.FavouriteCityTable
-import com.example.weather.pojo.ReverseGeocodingResponse
-import com.example.weather.pojo.WeatherResponse
+import com.example.weather.pojo.*
 
 interface WeatherRepoInterface {
     suspend fun getWeatherDataFromApi(
@@ -12,15 +9,22 @@ interface WeatherRepoInterface {
         unit: String,
         lang: String,
         key: String
-    ): WeatherResponse
+    ): WeatherResponse?
+
+
+    suspend fun getAlertDataFromApi(
+        lat: String,
+        lon: String,
+        lang: String,
+        app_id: String
+    ): AlertResponse?
 
 
     suspend fun getReverseGeocodingFromApi(
         location: String,
         lang: String,
         key: String
-    ):ReverseGeocodingResponse
-
+    ): ReverseGeocodingResponse
 
 
     //room-stored movies
@@ -31,4 +35,8 @@ interface WeatherRepoInterface {
     fun insertFavouriteCityToDatabase(city: FavouriteCityTable)
     fun deleteFavouriteCityFromDatabase(city: FavouriteCityTable)
     suspend fun getAllFavouriteCitiesFromDatabase(): List<FavouriteCityTable>
+
+    fun insertAlertToDatabase(alert: AlertTable)
+    suspend fun getAlert(): List<AlertTable>
+    fun deleteAlert(alert: AlertTable)
 }

@@ -1,7 +1,8 @@
 package com.example.weather.data.room_database
 
 import android.content.Context
-import androidx.lifecycle.LiveData
+import com.example.weather.pojo.Alert
+import com.example.weather.pojo.AlertTable
 import com.example.weather.pojo.CityWeatherTable
 import com.example.weather.pojo.FavouriteCityTable
 
@@ -43,5 +44,17 @@ class LocalSource(context: Context) : LocalSourceInterface {
 
     override suspend fun getAllFavouriteCities(): List<FavouriteCityTable> {
         return weatherDAO.getAllFavouriteCityName()
+    }
+
+    override fun insertAlert(alert: AlertTable) {
+        weatherDAO.insertAlert(alert)
+    }
+
+    override suspend fun getAlert(): List<AlertTable> {
+        return weatherDAO.getAlert()
+    }
+
+    override fun deleteAlert(alert: AlertTable) {
+        weatherDAO.deleteAlert(alert)
     }
 }

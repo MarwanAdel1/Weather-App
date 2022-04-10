@@ -1,17 +1,13 @@
 package com.example.weather.model
 
 import android.content.Context
-import android.util.Log
 import com.example.weather.data.room_database.LocalSourceInterface
 import com.example.weather.network.RemoteSourceInterface
-import com.example.weather.pojo.CityWeatherTable
-import com.example.weather.pojo.FavouriteCityTable
-import com.example.weather.pojo.ReverseGeocodingResponse
-import com.example.weather.pojo.WeatherResponse
+import com.example.weather.pojo.*
 
 class WeatherRepo private constructor(
-    var remoteSourceInterface: RemoteSourceInterface,
-    var localSourceInterface: LocalSourceInterface,
+    private var remoteSourceInterface: RemoteSourceInterface,
+    private var localSourceInterface: LocalSourceInterface,
     var context: Context
 ) :
     WeatherRepoInterface {
@@ -37,8 +33,18 @@ class WeatherRepo private constructor(
         unit: String,
         lang: String,
         key: String
-    ): WeatherResponse {
+    ): WeatherResponse? {
         return remoteSourceInterface.getWeatherDataOverNetwork(lat, lon, unit, lang, key)
+    }
+
+
+    override suspend fun getAlertDataFromApi(
+        lat: String,
+        lon: String,
+        lang: String,
+        app_id: String
+    ): AlertResponse? {
+        return remoteSourceInterface.getAlertData(lat, lon, lang, app_id)
     }
 
     override suspend fun getReverseGeocodingFromApi(
@@ -71,5 +77,17 @@ class WeatherRepo private constructor(
 
     override suspend fun getAllFavouriteCitiesFromDatabase(): List<FavouriteCityTable> {
         return localSourceInterface.getAllFavouriteCities()
+    }
+
+    override fun insertAlertToDatabase(alert: AlertTable) {
+        localSourceInterface.insertAlert(alert)
+    }
+
+    override suspend fun getAlert(): List<AlertTable> {
+        return localSourceInterface.getAlert()
+    }
+
+    override fun deleteAlert(alert: AlertTable) {
+        localSourceInterface.deleteAlert(alert)
     }
 }

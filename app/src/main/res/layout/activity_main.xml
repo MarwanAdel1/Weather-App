@@ -5,7 +5,7 @@
     android:id="@+id/drawerLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".main_activity.view.MainActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -32,7 +32,7 @@
                 android:backgroundTint="#2979ff"
                 android:orientation="horizontal"
                 android:padding="10dp"
-                android:weightSum="6">
+                android:weightSum="7">
 
                 <ImageView
                     android:id="@+id/open_navigation_drawer"
@@ -49,6 +49,12 @@
                     android:gravity="center"
                     android:textColor="@color/white" />
 
+                <ImageView
+                    android:id="@+id/map_icon"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:src="@drawable/map_icon" />
 
             </LinearLayout>
 
