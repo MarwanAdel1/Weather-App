@@ -39,4 +39,5 @@ interface WeatherRepoInterface {
     fun insertAlertToDatabase(alert: AlertTable)
     suspend fun getAlert(): List<AlertTable>
     fun deleteAlert(alert: AlertTable)
+    fun deleteAllAlert()
 }

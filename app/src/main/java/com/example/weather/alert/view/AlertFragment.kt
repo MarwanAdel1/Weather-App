@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.CalendarView
 import android.widget.TimePicker
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -17,6 +18,7 @@ import com.example.weather.R
 import com.example.weather.alert.adapters.AlertAdapter
 import com.example.weather.alert.viewmodel.AlertViewModel
 import com.example.weather.alert.viewmodel.AlertViewModelFactory
+import com.example.weather.alert.work_manager.WorkManagerAccess
 import com.example.weather.data.room_database.LocalSource
 import com.example.weather.model.WeatherRepo
 import com.example.weather.network.RemoteSource
@@ -75,15 +77,16 @@ class AlertFragment(private var myContext: Context) : Fragment(), AlertCommunica
 
         alertViewModel = ViewModelProvider(this, alertViewModelFactory)[AlertViewModel::class.java]
 
-        alertViewModel.getWeatherDataFromApi()
-
         alertViewModel.getAlert()
         alertViewModel.alertLiveData.observe(viewLifecycleOwner) {
             if (it != null) {
                 alertAdapter.setalertsList(it)
                 alertAdapter.notifyDataSetChanged()
-
-
+                if (alertViewModel.getSetting() == 0) {
+                    val workManagerAccess: WorkManagerAccess =
+                        WorkManagerAccess.getInstance(myContext)
+                    workManagerAccess.setWorkManager(it)
+                }
             }
         }
 
@@ -119,15 +122,19 @@ class AlertFragment(private var myContext: Context) : Fragment(), AlertCommunica
             var c = Calendar.getInstance()
             c.set(Calendar.DAY_OF_MONTH, day)
             c.set(Calendar.MONTH, month)
-            c.set(Calendar.YEAR,year)
-            c.set(Calendar.MINUTE,timePicker.minute)
-            c.set(Calendar.HOUR_OF_DAY,timePicker.hour)
+            c.set(Calendar.YEAR, year)
+            c.set(Calendar.MINUTE, timePicker.minute)
+            c.set(Calendar.HOUR_OF_DAY, timePicker.hour)
 
             var dateStr = SimpleDateFormat("d-MM-yyyy").format(c.time)
-            var timeStr = SimpleDateFormat("hh:mm aa").format(c.time)
+            var timeStr = SimpleDateFormat("H:mm").format(c.time)
             var alert = AlertTable(dateStr, timeStr)
 
-            alertViewModel.insertAlertToDb(alert)
+            if (alertViewModel.getSetting() == 0) {
+                alertViewModel.insertAlertToDb(alert)
+            } else {
+                Toast.makeText(myContext, "Notification Disabled", Toast.LENGTH_SHORT).show()
+            }
             dialog.cancel()
         }
 

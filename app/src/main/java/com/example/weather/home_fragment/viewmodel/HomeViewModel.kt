@@ -100,16 +100,11 @@ class HomeViewModel(
 
     fun getWeatherDataFromApi(lat: String, lon: String, unit: String, lang: String, key: String) {
         viewModelScope.launch(Dispatchers.IO) {
-            Log.e("TAG", "onViewCreated7:")
             val weatherResponse: WeatherResponse? =
                 weatherRepo.getWeatherDataFromApi(lat, lon, unit, lang, key)
-            Log.e("TAG", "onViewCreated8:")
             withContext(Dispatchers.Main) {
                 weatherResponseMutableLiveData.postValue(weatherResponse)
-                Log.e("TAG", "onViewCreated5:")
                 getAlterWeatherDataFromApi(lat, lon, unit, alterLang, key)
-                Log.e("TAG", "onViewCreated6:")
-
             }
         }
     }
@@ -124,10 +119,7 @@ class HomeViewModel(
         viewModelScope.launch(Dispatchers.IO) {
             val weatherResponse: WeatherResponse? =
                 weatherRepo.getWeatherDataFromApi(lat, lon, unit, lang, key)
-            Log.e("TAG", "onViewCreated3: ")
-
             withContext(Dispatchers.Main) {
-                Log.e("TAG", "onViewCreated4:")
                 alternativeWeatherResponseMutableLiveData.postValue(weatherResponse)
             }
         }
@@ -168,7 +160,6 @@ class HomeViewModel(
         if (sharedPreferences.contains("lat") && sharedPreferences.contains("lng")) {
             getWeatherDataFromDatabase()
         } else {
-            Log.e("HomeViewMode", "Hi2")
             getWeatherDataFromDatabase()
         }
     }
@@ -183,20 +174,15 @@ class HomeViewModel(
                 reverseGeocoding(lat, lng, lang, ApiKeys.HERE_API_KEY)
             }
         } else {
-            Log.e("HomeViewMode", "Hi4")
             getLocation()
         }
     }
 
     @SuppressLint("MissingPermission")
     fun getLocation() {
-        Log.e("TAG", "Test Location 1:")
         var task: Task<Location> = fusedLocationClient.lastLocation
-        Log.e("TAG", "Test Location 2:")
         task.addOnSuccessListener {
-            Log.e("TAG", "Test Location 3: $it")
             if (it != null) {
-                Log.e("TAG", "Test Location : ${it.latitude} - ${it.longitude}")
 
                 saveLocation(it)
 
@@ -245,7 +231,6 @@ class HomeViewModel(
     private val locationCallback = object : LocationCallback() {
         override fun onLocationResult(p0: LocationResult) {
             val lastLocation: Location = p0.lastLocation
-            Log.e("TAG", "onLocationResult: ${lastLocation.longitude}")
 
             saveLocation(lastLocation)
 

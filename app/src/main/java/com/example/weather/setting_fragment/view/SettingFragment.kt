@@ -13,8 +13,8 @@ import android.widget.Toast
 import androidx.core.view.ViewCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import com.example.weather.main_activity.view.FragmentsCommunicator
 import com.example.weather.R
+import com.example.weather.main_activity.view.FragmentsCommunicator
 import com.example.weather.pojo.SettingData
 import com.example.weather.setting_fragment.viewmodel.SettingViewModel
 import com.example.weather.setting_fragment.viewmodel.SettingViewModelFactory
@@ -39,6 +39,7 @@ class SettingFragment(
     private var windSpeedValue: Int = 0
 
     private var oldLanguage: String? = null
+    private var oldNotification: Int? = null
 
 
     private lateinit var settingViewModel: SettingViewModel
@@ -84,6 +85,8 @@ class SettingFragment(
                 1 -> "ar"
                 else -> "en"
             }
+
+            oldNotification = it.notification
         }
 
 
@@ -108,15 +111,18 @@ class SettingFragment(
                 else -> "en"
             }
 
+
+
             settingViewModel.saveSetting(data)
 
 
             changeLanguage()
 
+
             Toast.makeText(myContext, "Setting Saved", Toast.LENGTH_SHORT).show()
-            if (newLanguage.contentEquals(oldLanguage)) {
+            if (newLanguage.contentEquals(oldLanguage) && oldNotification == notificationValue) {
                 communicator.goToHomeFragment()
-            }else{
+            } else {
                 communicator.restartApp()
             }
         }

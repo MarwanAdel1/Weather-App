@@ -23,11 +23,15 @@ import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.ViewModelProvider
 import com.example.weather.R
 import com.example.weather.alert.view.AlertFragment
+import com.example.weather.alert.work_manager.WorkManagerAccess
+import com.example.weather.data.room_database.LocalSource
 import com.example.weather.favourite_fragment.view.FavouriteFragment
 import com.example.weather.home_fragment.view.HomeFragment
 import com.example.weather.home_maps_screen.view.HomeMapsActivity
 import com.example.weather.main_activity.viewmodel.MainActivityViewModel
 import com.example.weather.main_activity.viewmodel.MainActivityViewModelFactory
+import com.example.weather.model.WeatherRepo
+import com.example.weather.network.RemoteSource
 import com.example.weather.setting_fragment.view.SettingFragment
 import com.google.android.material.navigation.NavigationView
 import java.util.*
@@ -59,6 +63,11 @@ class MainActivity : AppCompatActivity(), FragmentsCommunicator {
         super.onCreate(savedInstanceState)
 
         mainActivityViewModelFactory = MainActivityViewModelFactory(
+            WeatherRepo.getInstance(
+                RemoteSource.getInstance(),
+                LocalSource.getInstance(this),
+                this
+            ),
             this
         )
 
@@ -75,6 +84,13 @@ class MainActivity : AppCompatActivity(), FragmentsCommunicator {
             else -> "en"
         }
         changeLanguage(lang)
+
+        if (setting.notification == 1) {
+            val workManagerAccess: WorkManagerAccess =
+                WorkManagerAccess.getInstance(this)
+            workManagerAccess.cancelAllWork()
+            mainActivityViewModel.deleteAllAlertFromDatabase()
+        }
 
         setContentView(R.layout.activity_main)
 
@@ -268,8 +284,6 @@ class MainActivity : AppCompatActivity(), FragmentsCommunicator {
         } else {
             this.window.decorView.layoutDirection = View.LAYOUT_DIRECTION_LTR
         }
-
-        Toast.makeText(this, "Saved", Toast.LENGTH_SHORT).show()
     }
 
 

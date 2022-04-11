@@ -16,4 +16,5 @@ interface LocalSourceInterface {
     fun insertAlert(alert: AlertTable)
     suspend fun getAlert(): List<AlertTable>
     fun deleteAlert(alert: AlertTable)
+    fun deleteAllAlert()
 }

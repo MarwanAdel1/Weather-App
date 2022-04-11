@@ -34,4 +34,7 @@ interface WeatherDAO {
 
     @Delete
     fun deleteAlert(alert: AlertTable)
+
+    @Query("Delete FROM alert")
+    fun deleteAllAlert()
 }

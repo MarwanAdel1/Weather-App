@@ -79,7 +79,6 @@ class FavMapsViewModel(
 
         val temp = sharedPreferences.getInt(SettingViewModel.TEMP_NAME, 0)
         val wind = sharedPreferences.getInt(SettingViewModel.WIND_SPEED_NAME, 0)
-        val location = sharedPreferences.getInt(SettingViewModel.LOCATION_NAME, 0)
         val language = sharedPreferences.getInt(SettingViewModel.LANGUAGE_NAME, 0)
         val notification = sharedPreferences.getInt(SettingViewModel.NOTIFICATION_NAME, 1)
 

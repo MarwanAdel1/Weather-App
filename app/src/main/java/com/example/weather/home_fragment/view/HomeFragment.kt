@@ -4,7 +4,6 @@ import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -132,17 +131,6 @@ class HomeFragment(private var myContext: Context) : Fragment() {
                 noInternetImage.visibility = View.VISIBLE
             }
         }
-
-
-        homeViewModel.alternativeWeatherResponseLiveData.observe(viewLifecycleOwner) {
-            if (it != null) {
-                Log.e("TAG", "onViewCreated: $it")
-                homeViewModel.insertWeatherDataToDatabase(currentCity.text.toString(), it)
-            } else {
-                Log.e("TAG", "onViewCreated2: $it")
-            }
-        }
-
 
         homeViewModel.cityNameLiveData.observe(viewLifecycleOwner) {
             if (it == null) {

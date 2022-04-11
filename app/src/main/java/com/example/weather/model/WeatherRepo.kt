@@ -90,4 +90,8 @@ class WeatherRepo private constructor(
     override fun deleteAlert(alert: AlertTable) {
         localSourceInterface.deleteAlert(alert)
     }
+
+    override fun deleteAllAlert() {
+        localSourceInterface.deleteAllAlert()
+    }
 }

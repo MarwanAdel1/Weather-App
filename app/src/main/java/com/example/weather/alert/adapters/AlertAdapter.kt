@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.weather.R
 import com.example.weather.alert.view.AlertCommunicator
 import com.example.weather.pojo.AlertTable
+import java.text.SimpleDateFormat
 
 class AlertAdapter(private var communicator: AlertCommunicator) :
     RecyclerView.Adapter<AlertAdapter.ViewHolder>() {
@@ -27,7 +28,9 @@ class AlertAdapter(private var communicator: AlertCommunicator) :
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.time.text = alerts[position].time
+        var simpleDateFormat = SimpleDateFormat("H:mm")
+        var date = simpleDateFormat.parse(alerts[position].time)
+        holder.time.text = SimpleDateFormat("h:mm aa").format(date)
         holder.date.text = alerts[position].date
         holder.delete.setOnClickListener {
             communicator.deleteAlert(alerts[position])

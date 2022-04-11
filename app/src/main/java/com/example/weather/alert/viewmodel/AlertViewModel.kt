@@ -2,16 +2,15 @@ package com.example.weather.alert.viewmodel
 
 import android.content.Context
 import android.content.SharedPreferences
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.weather.data.ApiKeys
 import com.example.weather.model.WeatherRepoInterface
 import com.example.weather.pojo.AlertResponse
 import com.example.weather.pojo.AlertTable
 import com.example.weather.setting_fragment.viewmodel.SettingViewModel
+import com.example.weather.setting_fragment.viewmodel.SettingViewModel.Companion.NOTIFICATION_NAME
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -42,22 +41,7 @@ class AlertViewModel(
     }
 
 
-    fun getWeatherDataFromApi() {
-        viewModelScope.launch(Dispatchers.IO) {
-            Log.e("TAG", "onViewCreated7:")
-            val alertResponse: AlertResponse? =
-                weatherRepo.getAlertDataFromApi(lat, lng, lang, ApiKeys.WEATHER_API_KEY)
-            Log.e("TAG", "onViewCreated8:")
-            withContext(Dispatchers.Main) {
-                alertResponseMutableLiveData.postValue(alertResponse)
-                Log.e("TAG", "onViewCreated5: $alertResponse")
-
-            }
-        }
-    }
-
-
-    fun getSetting() {
+    fun getSetting(): Int {
         val language = sharedPreferences.getInt(SettingViewModel.LANGUAGE_NAME, 0)
         lat = sharedPreferences.getString("lat", "0")!!
         lng = sharedPreferences.getString("lng", "0")!!
@@ -67,6 +51,8 @@ class AlertViewModel(
             1 -> "ar"
             else -> "en"
         }
+
+        return sharedPreferences.getInt(NOTIFICATION_NAME, 1)
     }
 
 
